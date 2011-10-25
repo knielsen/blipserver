@@ -62,9 +62,9 @@ utils.spawn(function()
 	assert(serial:read('*l'))
 
 	while true do
-		local ms = assert(serial:read('*l'))
+		local line = assert(serial:read('*l'))
+		local ms, temp = line:match("^([0-9]+)%s*([.0-9]*)")
 		local now = format('%0.f', gettimeofday() * 1000)
-		ms = ms:sub(1, -2)
 
 		put_blip(now, ms)
 		assert(db:run('put', now, ms))
